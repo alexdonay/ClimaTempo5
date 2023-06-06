@@ -72,7 +72,7 @@ public class CptecService {
                                     } else if (tagName.equalsIgnoreCase("uf")) {
                                         localidade.setUf(parser.getText());
                                     } else if (tagName.equalsIgnoreCase("id")) {
-                                        localidade.setId(Integer.parseInt(parser.getText()));
+                                        localidade.setId(parser.getText());
                                     }
                                 }
                                 break;

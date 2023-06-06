@@ -3,13 +3,15 @@ package com.donay.climatempo5;
 public class Localidade {
     private String nome;
     private String uf;
-    private int id;
-    public Localidade(String nome, String uf, int id){
+    private String id;
+    public Localidade(String nome, String uf, String id){
         this.nome = nome;
         this.uf = uf;
         this.id = id;
 
     }
+
+
     public Localidade(){}
     public String getNome() {
         return nome;
@@ -27,15 +29,24 @@ public class Localidade {
         this.uf = uf;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
+
     @Override
     public String toString(){
         return "Cidade " + this.nome + " UF " + this.uf;
+    }
+
+    public String getUF() {
+        return this.uf;
+    }
+
+    public String getID() {
+        return this.id;
     }
 }
