@@ -21,29 +21,28 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-public class ApiDataFetcher extends AsyncTask<Void, Void, List<String>> {
+public class ApiDataFetcher extends AsyncTask<Void, Void, List<Localidade>> {
     private String apiUrl;
-    private List<String> columns;
     private ApiCallback callback;
 
-    public ApiDataFetcher(String apiUrl, List<String> columns, ApiCallback callback) {
+    public ApiDataFetcher(String apiUrl, ApiCallback callback) {
         this.apiUrl = apiUrl;
-        this.columns = columns;
         this.callback = callback;
     }
 
-    @Override
-    protected List<String> doInBackground(Void... params) {
-        List<String> apiData = new ArrayList<>();
+    protected List<Localidade> doInBackground(Void... voids) {
+        List<Localidade> apiData = new ArrayList<>();
 
         try {
             URL url = new URL(apiUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
-
+            connection.setRequestProperty("Accept-Charset", "UTF-8");
             int statusCode = connection.getResponseCode();
             if (statusCode == HttpURLConnection.HTTP_OK) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
+
                 StringBuilder xmlResponse = new StringBuilder();
                 String line;
                 while ((line = reader.readLine()) != null) {
@@ -61,15 +60,13 @@ public class ApiDataFetcher extends AsyncTask<Void, Void, List<String>> {
 
                 for (int i = 0; i < nodeList.getLength(); i++) {
                     Element cidadeElement = (Element) nodeList.item(i);
-                    StringBuilder rowData = new StringBuilder();
 
-                    for (String column : columns) {
-                        String columnData = cidadeElement.getElementsByTagName(column).item(0).getTextContent();
-                        rowData.append(columnData).append(", ");
-                    }
+                    String nome = cidadeElement.getElementsByTagName("nome").item(0).getTextContent();
+                    String uf = cidadeElement.getElementsByTagName("uf").item(0).getTextContent();
+                    String id = cidadeElement.getElementsByTagName("id").item(0).getTextContent();
 
-                    // Remove a vírgula extra no final e adiciona os dados na lista
-                    apiData.add(rowData.substring(0, rowData.length() - 2));
+                    Localidade localidade = new Localidade(nome, uf, id);
+                    apiData.add(localidade);
                 }
             }
         } catch (IOException e) {
@@ -82,7 +79,9 @@ public class ApiDataFetcher extends AsyncTask<Void, Void, List<String>> {
     }
 
     @Override
-    protected void onPostExecute(List<String> apiData) {
-        callback.onApiFinished(String.valueOf(apiData));
+    protected void onPostExecute(List<Localidade> apiData) {
+        LocalidadeAdapter adapter = new LocalidadeAdapter(callback.getContext(), apiData);
+        callback.onApiFinished(adapter);
     }
+
 }
