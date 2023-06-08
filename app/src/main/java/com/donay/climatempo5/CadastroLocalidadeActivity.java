@@ -2,6 +2,7 @@ package com.donay.climatempo5;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -37,6 +38,8 @@ public class CadastroLocalidadeActivity extends AppCompatActivity implements Api
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Localidade localidadeSelecionada = adapter.getItem(position);
                 cadastrarLocalidade(localidadeSelecionada);
+                onBackPressed();
+                finish();
             }
         });
     }
@@ -53,10 +56,9 @@ public class CadastroLocalidadeActivity extends AppCompatActivity implements Api
         return this;
     }
     private void cadastrarLocalidade(Localidade localidade) {
-        // Realizar o cadastro da localidade selecionada
-        // Implemente o código aqui para realizar o cadastro, como enviar os dados para um servidor ou salvar localmente.
-
-        // Exemplo de exibição de mensagem de confirmação
+        LocalidadeDBHelper dbHelper = new LocalidadeDBHelper(this);
+        dbHelper.insertLocalidade(localidade);
+        dbHelper.close();
         Toast.makeText(CadastroLocalidadeActivity.this, "Localidade cadastrada: " + localidade.getNome(), Toast.LENGTH_SHORT).show();
     }
 }

@@ -34,14 +34,14 @@ import java.util.List;
             View listItemView = convertView;
 
             if (listItemView == null) {
-                listItemView = LayoutInflater.from(context).inflate(R.layout.list_item_localidade, parent, false);
+                listItemView = LayoutInflater.from(context).inflate(R.layout.list_item_localidade2, parent, false);
             }
 
             Localidade localidade = localidades.get(position);
 
-            TextView nomeTextView = listItemView.findViewById(R.id.nomeTextView);
-            TextView ufTextView = listItemView.findViewById(R.id.ufTextView);
-            TextView idTextView = listItemView.findViewById(R.id.idTextView);
+            TextView nomeTextView = listItemView.findViewById(R.id.nomeTextView1);
+            TextView ufTextView = listItemView.findViewById(R.id.ufTextView1);
+            TextView idTextView = listItemView.findViewById(R.id.idTextView1);
 
             nomeTextView.setText(localidade.getNome());
             ufTextView.setText(localidade.getUf());
