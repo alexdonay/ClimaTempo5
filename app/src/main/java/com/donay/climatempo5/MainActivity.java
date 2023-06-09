@@ -1,5 +1,6 @@
 package com.donay.climatempo5;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -7,13 +8,17 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.navigation.ui.AppBarConfiguration;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.CursorAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.donay.climatempo5.databinding.ActivityMainBinding;
@@ -51,27 +56,39 @@ public  class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        listView = findViewById(R.id.lvLocalidades);
+        listView = (ListView)findViewById(R.id.lvLocalidades);
         dbHelper = new LocalidadeDBHelper(this);
         Cursor dados = dbHelper.getAllLocalidades();
-        LocalidadePrevisaoAdapter adapter = new LocalidadePrevisaoAdapter(this, dados);
+        CursorAdapter adapter = new CursorAdapter(this, dados, 0) {
+            @Override
+            public View newView(Context context, Cursor cursor, ViewGroup parent) {
+                // Cria uma nova view para um item da lista
+                LayoutInflater inflater = LayoutInflater.from(context);
+                return inflater.inflate(R.layout.list_item_localidade, parent, false);
+            }
+
+            @Override
+            public void bindView(View view, Context context, Cursor cursor) {
+                // Obtém as referências das views do item da lista
+                TextView nomeTextView = view.findViewById(R.id.nomeTextView);
+                TextView ufTextView = view.findViewById(R.id.ufTextView);
+
+
+                // Obtém os dados do cursor
+                String nome = cursor.getString(cursor.getColumnIndexOrThrow("nome"));
+                String uf = cursor.getString(cursor.getColumnIndexOrThrow("uf"));
+
+
+                // Define os dados nas views
+                nomeTextView.setText(nome);
+                ufTextView.setText(uf);
+
+            }
+        };
+
         listView.setAdapter(adapter);
-        if (dados != null && dados.moveToFirst()) {
-            do {
-                int id = dados.getInt(dados.getColumnIndexOrThrow("_id"));
-                String nome = dados.getString(dados.getColumnIndexOrThrow("nome"));
-                String uf = dados.getString(dados.getColumnIndexOrThrow("uf"));
 
-                String mensagem = "ID: " + id + "\nNome: " + nome + "\nUF: " + uf;
-                Toast.makeText(MainActivity.this, mensagem, Toast.LENGTH_SHORT).show();
-                Log.d("MainActivity", "Número de registros no Cursor: " + dados.getCount());
-            } while (dados.moveToNext());
-        }
 
-// Certifique-se de fechar o Cursor após utilizá-lo
-        if (dados != null) {
-            dados.close();
-        }
 
     }
 

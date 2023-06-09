@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class LocalidadeDBHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "localidades2.db";
+    private static final String DATABASE_NAME = "localidades3.db";
     private static final int DATABASE_VERSION = 1;
     private static final String TABLE_NAME = "localidades";
     private static final String COLUMN_ID = "id";

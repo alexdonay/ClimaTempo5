@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class LocalidadePrevisaoAdapter extends CursorAdapter {
     public LocalidadePrevisaoAdapter(Context context, Cursor cursor) {
@@ -15,7 +16,8 @@ public class LocalidadePrevisaoAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_2, parent, false);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        return inflater.inflate(R.layout.list_item_localidade, parent, false);
     }
 
     @Override
@@ -23,8 +25,8 @@ public class LocalidadePrevisaoAdapter extends CursorAdapter {
         TextView nomeTextView = view.findViewById(android.R.id.text1);
         TextView ufTextView = view.findViewById(android.R.id.text2);
 
-        String nome = cursor.getString(cursor.getColumnIndexOrThrow(LocalidadeDBHelper.COLUMN_NOME));
-        String uf = cursor.getString(cursor.getColumnIndexOrThrow(LocalidadeDBHelper.COLUMN_UF));
+        String nome = cursor.getString(cursor.getColumnIndexOrThrow("nome"));
+        String uf = cursor.getString(cursor.getColumnIndexOrThrow("uf"));
 
         nomeTextView.setText(nome);
         ufTextView.setText(uf);
