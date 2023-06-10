@@ -16,19 +16,26 @@ public class LocalidadePrevisaoAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        // Cria uma nova view para um item da lista
         LayoutInflater inflater = LayoutInflater.from(context);
         return inflater.inflate(R.layout.list_item_localidade, parent, false);
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        TextView nomeTextView = view.findViewById(android.R.id.text1);
-        TextView ufTextView = view.findViewById(android.R.id.text2);
+        // Obtém as referências das views do item da lista
+        TextView nomeTextView = view.findViewById(R.id.nomeTextView);
+        TextView ufTextView = view.findViewById(R.id.ufTextView);
 
+
+        // Obtém os dados do cursor
         String nome = cursor.getString(cursor.getColumnIndexOrThrow("nome"));
         String uf = cursor.getString(cursor.getColumnIndexOrThrow("uf"));
 
+
+        // Define os dados nas views
         nomeTextView.setText(nome);
         ufTextView.setText(uf);
+
     }
 }

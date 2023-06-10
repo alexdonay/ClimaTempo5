@@ -3,8 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.donay.climatempo5.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/dias3"
         android:orderInCategory="100"
-        android:title="@string/incluir_localidade"
+        android:title="3 dias"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/dias7"
+        android:orderInCategory="100"
+        android:title="7 dias"
         app:showAsAction="never" />
 </menu>

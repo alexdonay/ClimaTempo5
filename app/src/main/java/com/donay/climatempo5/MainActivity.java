@@ -2,6 +2,7 @@ package com.donay.climatempo5;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -16,6 +17,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,7 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public  class MainActivity extends AppCompatActivity {
-
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
@@ -38,6 +41,8 @@ public  class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferences = getSharedPreferences("Preferencias", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
@@ -50,8 +55,8 @@ public  class MainActivity extends AppCompatActivity {
             }
         });
 
-
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -59,54 +64,52 @@ public  class MainActivity extends AppCompatActivity {
         listView = (ListView)findViewById(R.id.lvLocalidades);
         dbHelper = new LocalidadeDBHelper(this);
         Cursor dados = dbHelper.getAllLocalidades();
-        CursorAdapter adapter = new CursorAdapter(this, dados, 0) {
-            @Override
-            public View newView(Context context, Cursor cursor, ViewGroup parent) {
-                // Cria uma nova view para um item da lista
-                LayoutInflater inflater = LayoutInflater.from(context);
-                return inflater.inflate(R.layout.list_item_localidade, parent, false);
-            }
 
-            @Override
-            public void bindView(View view, Context context, Cursor cursor) {
-                // Obtém as referências das views do item da lista
-                TextView nomeTextView = view.findViewById(R.id.nomeTextView);
-                TextView ufTextView = view.findViewById(R.id.ufTextView);
-
-
-                // Obtém os dados do cursor
-                String nome = cursor.getString(cursor.getColumnIndexOrThrow("nome"));
-                String uf = cursor.getString(cursor.getColumnIndexOrThrow("uf"));
-
-
-                // Define os dados nas views
-                nomeTextView.setText(nome);
-                ufTextView.setText(uf);
-
-            }
-        };
-
+        LocalidadePrevisaoAdapter adapter = new LocalidadePrevisaoAdapter(this, dados);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Cursor localidadeSelecionada = (Cursor) adapterView.getItemAtPosition(position);
+                String id1 = localidadeSelecionada.getString(localidadeSelecionada.getColumnIndexOrThrow("_id"));
+                Intent intent = new Intent(MainActivity.this, LocalidadeActivity.class);
+                intent.putExtra("localidade", id1);
+                startActivity(intent);
+            }
+        });
+
+        }
 
 
 
-    }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem item3dias = menu.findItem(R.id.dias3);
+        item3dias.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                editor.putInt("numeroDias", 3);
+                editor.apply();
+                return true;
+            }
+        });
+
+        MenuItem item7dias = menu.findItem(R.id.dias7);
+        item7dias.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                editor.putInt("numeroDias", 7);
+                editor.apply();
+                return true;
+            }
+        });
+
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            Intent intent = new Intent(MainActivity.this, CadastroLocalidadeActivity.class);
-            startActivity(intent);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 }
