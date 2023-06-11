@@ -8,7 +8,12 @@ public class previsaoModel {
     private String iuv;
 
     public String getDia() {
-        return dia;
+        String ano = this.dia.substring(6, 10);
+        String mes = this.dia.substring(11, 13);
+        String dia1 = this.dia.substring(14, 16);
+
+        String dataFormatada = dia1 + "/" + mes + "/" + ano;
+        return "Dia: " + dataFormatada;
     }
 
     public void setDia(String dia) {

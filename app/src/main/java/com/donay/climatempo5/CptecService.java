@@ -48,9 +48,12 @@ public class CptecService {
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     InputStream inputStream = connection.getInputStream();
                     XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+                    factory.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+
                     XmlPullParser parser = factory.newPullParser();
                     parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-                    parser.setInput(inputStream, null);
+                    parser.setInput(inputStream, "UTF-8");
+
 
                     int eventType = parser.getEventType();
                     Localidade localidade = null;
