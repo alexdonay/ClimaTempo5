@@ -1,0 +1,64 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <!-- Imagem da previsão -->
+    <ImageView
+        android:id="@+id/imageViewPrevisao"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+
+        android:contentDescription="Imagem da previsão" />
+
+    <!-- Informações da previsão -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingStart="16dp">
+
+        <!-- Data -->
+        <TextView
+            android:id="@+id/textViewData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold" />
+
+        <!-- Temperatura -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewTemperaturaMaxima"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Temp. Max: "
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/textViewTemperaturaMinima"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Temp. Min: " />
+
+        </LinearLayout>
+
+        <!-- Índice UV -->
+        <TextView
+            android:id="@+id/textViewIndiceUV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Índice UV: " />
+
+    </LinearLayout>
+
+</LinearLayout>

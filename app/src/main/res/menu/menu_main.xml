@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.donay.climatempo5.MainActivity">
     <item
-        android:id="@+id/dias3"
+        android:id="@+id/dias4"
         android:orderInCategory="100"
-        android:title="3 dias"
+        android:title="4 dias"
         app:showAsAction="never" />
     <item
         android:id="@+id/dias7"

@@ -6,13 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".LocalidadeActivity">
 
-    <TextView
-        android:id="@+id/nomeTextView"
-        android:layout_width="109dp"
-        android:layout_height="19dp"
-        android:text="TextView"
+
+
+    <ListView
+        android:id="@+id/lsPrevisoesAC"
+        android:layout_width="397dp"
+        android:layout_height="541dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

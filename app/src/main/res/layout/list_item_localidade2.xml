@@ -5,6 +5,12 @@
     android:orientation="vertical"
     android:padding="8dp">
     <TextView
+        android:id="@+id/idTextView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+    <TextView
         android:id="@+id/nomeTextView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,10 +23,6 @@
         android:layout_height="wrap_content"
         android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/idTextView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14sp" />
+
 
 </LinearLayout>

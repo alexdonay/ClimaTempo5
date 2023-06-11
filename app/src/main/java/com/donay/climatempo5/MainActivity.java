@@ -88,11 +88,11 @@ public  class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        MenuItem item3dias = menu.findItem(R.id.dias3);
+        MenuItem item3dias = menu.findItem(R.id.dias4);
         item3dias.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                editor.putInt("numeroDias", 3);
+                editor.putInt("numeroDias", 4);
                 editor.apply();
                 return true;
             }
